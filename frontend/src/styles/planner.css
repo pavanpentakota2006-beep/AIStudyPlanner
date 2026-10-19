@@ -1,0 +1,87 @@
+/* Planner & Timetable Specific Styles */
+.planner-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.planner-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.planner-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1rem;
+}
+
+.day-column {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  min-height: 480px;
+  display: flex;
+  flex-direction: column;
+}
+
+.day-header {
+  text-align: center;
+  padding-bottom: 0.75rem;
+  margin-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.day-header h4 {
+  font-size: 0.95rem;
+}
+
+.day-header span {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.session-slot {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px dashed var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem;
+  margin-bottom: 0.75rem;
+  transition: var(--transition-fast);
+}
+
+.session-slot.active-slot {
+  background: rgba(99, 102, 241, 0.1);
+  border: 1px solid var(--primary);
+}
+
+.session-time {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--primary);
+  margin-bottom: 0.25rem;
+}
+
+.session-subject {
+  font-weight: 700;
+  font-size: 0.85rem;
+  margin-bottom: 0.25rem;
+}
+
+.session-topic {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+@media (max-width: 1024px) {
+  .planner-grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .day-column {
+    min-height: auto;
+  }
+}

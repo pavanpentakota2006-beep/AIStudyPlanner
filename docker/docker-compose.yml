@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  mysql-db:
+    image: mysql:8.0
+    container_name: study_planner_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ai_study_planner
+    ports:
+      - "3306:3306"
+    volumes:
+      - ../database/ai_study_planner.sql:/docker-entrypoint-initdb.d/1_schema.sql
+      - ../database/sample_data.sql:/docker-entrypoint-initdb.d/2_data.sql
+    networks:
+      - planner-network
+
+  backend:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: study_planner_backend
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/ai_study_planner?useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    depends_on:
+      - mysql-db
+    networks:
+      - planner-network
+
+  frontend:
+    image: node:20-alpine
+    container_name: study_planner_frontend
+    working_dir: /app
+    volumes:
+      - ../frontend:/app
+    ports:
+      - "3000:3000"
+    command: sh -c "npm install && npm run dev -- --host"
+    networks:
+      - planner-network
+
+networks:
+  planner-network:
+    driver: bridge
